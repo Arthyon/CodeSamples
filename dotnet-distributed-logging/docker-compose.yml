@@ -1,0 +1,23 @@
+services:
+  service1:
+    image: distributed-logging-sample
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+      - "5001:80"
+    environment:
+      - ServiceName=Service1
+      - DependencyUrl=http://service2
+  
+  service2:
+    image: distributed-logging-sample
+    environment:
+      - ServiceName=Service2
+  
+  seq:
+    image: "datalust/seq:latest"
+    ports:
+      - 5341:80
+    environment:
+      - ACCEPT_EULA=Y
